@@ -36,7 +36,7 @@ public class DeviceUsageControllerTest {
 
 	@Test
 	public void 전체_디바이스_목록_조회() throws Exception {
-		mockMvc.perform(get(END_POINT + "/devices").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(get(END_POINT + "/devices")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(handler().handlerType(DeviceUsageController.class))
@@ -46,7 +46,7 @@ public class DeviceUsageControllerTest {
 
 	@Test
 	public void 년도별_최대이용_디바이스_목록_조회() throws Exception {
-		mockMvc.perform(get(END_POINT + "/devices/year").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(get(END_POINT + "/devices/year")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(handler().handlerType(DeviceUsageController.class))
@@ -56,7 +56,7 @@ public class DeviceUsageControllerTest {
 
 	@Test
 	public void 특정년도_최대이용_디바이스_목록_조회() throws Exception {
-		mockMvc.perform(get(END_POINT + "/devices/year/2018").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(get(END_POINT + "/devices/year/2018")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(handler().handlerType(DeviceUsageController.class))
@@ -66,7 +66,7 @@ public class DeviceUsageControllerTest {
 
 	@Test
 	public void 디바이스_이용률_최대_년도_조회() throws Exception {
-		mockMvc.perform(get(END_POINT + "/year/SMART_PHONE").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(get(END_POINT + "/year/SMART_PHONE")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(handler().handlerType(DeviceUsageController.class))
@@ -76,7 +76,7 @@ public class DeviceUsageControllerTest {
 
 	@Test
 	public void 특정디바이스_2019년_이용률_예측_조회() throws Exception {
-		mockMvc.perform(get(END_POINT + "/devices/expected/DESKTOP_COMPUTER").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(get(END_POINT + "/devices/expected/DESKTOP_COMPUTER")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(handler().handlerType(DeviceUsageController.class))

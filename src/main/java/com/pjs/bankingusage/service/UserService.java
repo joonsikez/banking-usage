@@ -2,6 +2,7 @@ package com.pjs.bankingusage.service;
 
 import com.pjs.bankingusage.common.exception.ApiException;
 import com.pjs.bankingusage.common.exception.UnauthorizationException;
+import com.pjs.bankingusage.model.dto.UserDto;
 import com.pjs.bankingusage.model.entity.User;
 import com.pjs.bankingusage.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
@@ -28,15 +29,15 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public String signUp(final String userId, final String password) {
-		if (userRepository.findOneByUserId(userId) != null) {
+	public String signUp(UserDto userDto) {
+		if (userRepository.findOneByUserId(userDto.getUserId()) != null) {
 			throw new UnauthorizationException("이미 있는 ID 입니다.");
 		}
-		String token = getJwtToken(userId);
+		String token = getJwtToken(userDto.getUserId());
 		try {
 			userRepository.save(User.builder()
-					.userId(userId)
-					.password(encryptPassword(password))
+					.userId(userDto.getUserId())
+					.password(encryptPassword(userDto.getPassword()))
 					.token(token)
 					.build());
 		} catch (NoSuchAlgorithmException e) {
