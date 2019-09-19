@@ -11,6 +11,7 @@
     <groupId>com.pjs</groupId>
     <artifactId>banking-usage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>banking-usage</name>
     <description>Internet banking device usage api</description>
 

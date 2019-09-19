@@ -10,13 +10,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * DeviceUsageCommandLineRunner.java version 2019, 09. 17
@@ -35,10 +35,10 @@ public class DeviceUsageCommandLineRunner implements CommandLineRunner {
 
 		ClassPathResource resource = new ClassPathResource(BANKING_USAGE_CSV_FILE);
 
-		try (Stream<String> stream = Files.lines(Paths.get(resource.getURI()))) {
-
+		try (InputStream is = resource.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
 			List<String> deviceNames = new ArrayList<>();
-			stream.forEach(line -> {
+			reader.lines().forEach(line -> {
 				List<String> usageData = Arrays.asList(line.split(CSV_SEPARATOR));
 				if (deviceNames.isEmpty()) {
 					saveDevice(usageData, deviceNames);
