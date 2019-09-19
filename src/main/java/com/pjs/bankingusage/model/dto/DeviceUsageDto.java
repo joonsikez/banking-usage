@@ -27,8 +27,8 @@ public class DeviceUsageDto {
 	}
 
 	public DeviceUsageDto(DeviceUsage entity) {
-		this.deviceId = entity.getDeviceId();
-		this.deviceName = entity.getDeviceName();
+		this.deviceId = entity.getDevice().getDeviceId();
+		this.deviceName = entity.getDevice().getDeviceName();
 		this.year = entity.getYear();
 		this.rate = entity.getRate();
 	}

@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  * DeviceUsage.java version 2019, 09. 17
@@ -15,20 +17,20 @@ import javax.persistence.IdClass;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@IdClass(DeviceUsageId.class)
 public class DeviceUsage {
 	@Id
+	@GeneratedValue
+	private Long id;
 	private int year;
-	@Id
-	private String deviceId;
 	private double rate;
-	private String deviceName;
+	@OneToOne
+	@JoinColumn(name = "deviceId")
+	private Device device;
 
 	@Builder
-	public DeviceUsage(int year, double rate, String deviceId, String deviceName) {
+	public DeviceUsage(int year, double rate, Device device) {
 		this.year = year;
 		this.rate = rate;
-		this.deviceId = deviceId;
-		this.deviceName = deviceName;
+		this.device = device;
 	}
 }

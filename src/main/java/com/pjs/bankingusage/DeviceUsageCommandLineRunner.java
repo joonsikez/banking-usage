@@ -37,13 +37,13 @@ public class DeviceUsageCommandLineRunner implements CommandLineRunner {
 
 		try (Stream<String> stream = Files.lines(Paths.get(resource.getURI()))) {
 
-			List<String> deviceInfos = new ArrayList<>();
+			List<String> deviceNames = new ArrayList<>();
 			stream.forEach(line -> {
 				List<String> usageData = Arrays.asList(line.split(CSV_SEPARATOR));
-				if (deviceInfos.isEmpty()) {
-					saveDevice(usageData, deviceInfos);
+				if (deviceNames.isEmpty()) {
+					saveDevice(usageData, deviceNames);
 				} else {
-					saveUsage(usageData, deviceInfos);
+					saveUsage(usageData, deviceNames);
 				}
 			});
 		} catch (IOException e) {
@@ -51,9 +51,9 @@ public class DeviceUsageCommandLineRunner implements CommandLineRunner {
 		}
 	}
 
-	private void saveDevice(List<String> usageData, List<String> deviceInfos) {
+	private void saveDevice(List<String> usageData, List<String> deviceNames) {
 		usageData.forEach(str -> {
-			deviceInfos.add(str);
+			deviceNames.add(str);
 			if (DeviceInfo.getDeviceId(str) != null) {
 				// device 정보 저장
 				deviceUsageService.saveDevice(Device.builder()
@@ -64,19 +64,18 @@ public class DeviceUsageCommandLineRunner implements CommandLineRunner {
 		});
 	}
 
-	private void saveUsage(List<String> usageData, List<String> deviceInfos) {
+	private void saveUsage(List<String> usageData, List<String> deviceNames) {
 		int year = -1;
 		for (int i = 0; i < usageData.size(); i++) {
 			if (year < 0) {
 				year = getIntValue(usageData.get(i));
 			}
 
-			if (DeviceInfo.getDeviceId(deviceInfos.get(i)) != null) {
+			if (DeviceInfo.getDeviceId(deviceNames.get(i)) != null) {
 				deviceUsageService.saveDeviceUsage(DeviceUsage.builder()
 						.year(year)
 						.rate(getDoubleValue(usageData.get(i)))
-						.deviceId(DeviceInfo.getDeviceId(deviceInfos.get(i)))
-						.deviceName(deviceInfos.get(i))
+						.device(deviceUsageService.getDeviceByDeviceId(DeviceInfo.getDeviceId(deviceNames.get(i))))
 						.build());
 			}
 		}

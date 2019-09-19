@@ -97,7 +97,7 @@ public class DeviceUsageService {
 	public DeviceResponseDto getExpectedRate(final String deviceId) {
 		DeviceResponseDto deviceResponseDto = new DeviceResponseDto();
 
-		List<DeviceUsageDto> deviceUsageDtoList = deviceUsageRepository.findAllByDeviceId(deviceId)
+		List<DeviceUsageDto> deviceUsageDtoList = deviceUsageRepository.findAllByDevice(getDeviceByDeviceId(deviceId))
 				.stream()
 				.sorted(Comparator.comparingInt(DeviceUsage::getYear))
 				.map(DeviceUsageDto::new)
@@ -117,6 +117,11 @@ public class DeviceUsageService {
 				.build());
 
 		return deviceResponseDto;
+	}
+
+	@Transactional(readOnly = true)
+	public Device getDeviceByDeviceId(String deviceId) {
+		return deviceRepository.findOneByDeviceId(deviceId);
 	}
 
 	@Transactional
