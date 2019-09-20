@@ -1,5 +1,6 @@
-package com.pjs.bankingusage.common.interceptor;
+package com.pjs.bankingusage.common.configuration;
 
+import com.pjs.bankingusage.common.interceptor.TokenInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

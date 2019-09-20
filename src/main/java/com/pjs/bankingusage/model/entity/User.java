@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Device.java version 2019, 09. 17
+ * User.java version 2019, 09. 17
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * ApiExceptionAdvice.java version 2019, 09. 18
- * <p>
- * Copyright 2019 Tmon Corp. All rights Reserved.
- * Tmon PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 @RestControllerAdvice
 public class ApiExceptionAdvice {
@@ -36,6 +33,18 @@ public class ApiExceptionAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MissingRequestHeaderException.class)
 	public ApiExceptionResponse apiMissingRequestHeaderExceptionHandler(Exception e) {
+		return setExceptionResponse(e.getMessage());
+	}
+
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(ApiException.class)
+	public ApiExceptionResponse apiExceptionHandler(Exception e) {
+		return setExceptionResponse(e.getMessage());
+	}
+
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(Exception.class)
+	public ApiExceptionResponse exceptionHandler(Exception e) {
 		return setExceptionResponse(e.getMessage());
 	}
 

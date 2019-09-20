@@ -69,6 +69,7 @@ public class UserService {
 		User user = userRepository.findOneByToken(token);
 
 		if (user == null) {
+			log.debug("token : {}", token);
 			throw new ApiException("토큰에 해당하는 정보가 없습니다.");
 		}
 
@@ -86,7 +87,8 @@ public class UserService {
 		return Jwts.builder()
 				.setHeaderParam("typ", "JWT")
 				.setHeaderParam("regDate", System.currentTimeMillis())
-				.claim("id", userId)
+				.claim("userId", userId)
+				.claim("scope", "device/admin")
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY)
 				.compact();
 	}

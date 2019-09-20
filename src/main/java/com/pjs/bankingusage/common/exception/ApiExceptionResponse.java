@@ -5,9 +5,6 @@ import lombok.Setter;
 
 /**
  * ApiExceptionResponse.java version 2018, 09. 18
- * <p>
- * Copyright 2018 Ticketmonster Corp. All rights Reserved.
- * Ticketmonster PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 @Getter
 @Setter

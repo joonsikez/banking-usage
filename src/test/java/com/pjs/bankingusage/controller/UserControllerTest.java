@@ -18,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +37,7 @@ public class UserControllerTest {
 
 	private MockMvc mockMvc;
 
+
 	@Before
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
@@ -44,7 +46,7 @@ public class UserControllerTest {
 	@Test
 	public void 회원_가입() throws Exception {
 		UserDto userDto = new UserDto();
-		userDto.setUserId("junsik");
+		userDto.setUserId("aaa");
 		userDto.setPassword("123");
 		mockMvc.perform(post(END_POINT + "/signup")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -59,17 +61,35 @@ public class UserControllerTest {
 	@Test
 	public void 회원_로그인() throws Exception {
 		UserDto userDto = new UserDto();
-		userDto.setUserId("junsik");
+		userDto.setUserId("login");
 		userDto.setPassword("123");
 		userService.signUp(userDto);
 
 		mockMvc.perform(get(END_POINT + "/signin")
-				.param("id", "junsik")
+				.param("userId", "login")
 				.param("password", "123")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(handler().handlerType(UserController.class))
 				.andExpect(handler().methodName("signIn"))
+				.andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void 토큰_갱신() throws Exception {
+		UserDto userDto = new UserDto();
+		userDto.setUserId("refresh");
+		userDto.setPassword("123");
+		userService.signUp(userDto);
+
+		String token = userService.signIn("refresh", "123");
+
+		mockMvc.perform(put(END_POINT + "/refresh")
+				.header("Authorization", "Bearer Token " + token)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(handler().handlerType(UserController.class))
+				.andExpect(handler().methodName("refresh"))
 				.andDo(MockMvcResultHandlers.print());
 	}
 

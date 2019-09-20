@@ -4,6 +4,8 @@ import com.pjs.bankingusage.common.exception.ApiException;
 import com.pjs.bankingusage.model.dto.UserDto;
 import com.pjs.bankingusage.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/user")
+@Slf4j
 public class UserController {
 	private final UserService userService;
 
-	private static final String HTTP_TOKEN_HEADER = "x-access-token";
 	private static final String HTTP_AUTHORIZATION_HEADER = "Authorization";
 	private static final String REFRESH_HEADER_VALUE = "Bearer Token";
 
@@ -30,17 +32,18 @@ public class UserController {
 		return userService.signUp(userDto);
 	}
 
-	@PostMapping("/signin")
+	@GetMapping("/signin")
 	public String signIn(@RequestParam("userId") String userId, @RequestParam("password") String password) {
 		return userService.signIn(userId, password);
 	}
 
 	@PutMapping("/refresh")
-	public String refresh(@RequestHeader(HTTP_AUTHORIZATION_HEADER) String authorization, @RequestHeader(HTTP_TOKEN_HEADER) String token) {
-		if (REFRESH_HEADER_VALUE.equals(authorization) && token != null) {
-			return userService.refresh(token);
+	public String refresh(@RequestHeader(HTTP_AUTHORIZATION_HEADER) String token) {
+		if (token.startsWith(REFRESH_HEADER_VALUE)) {
+			String tokenValue = token.substring(REFRESH_HEADER_VALUE.length()).trim();
+			return userService.refresh(tokenValue);
 		} else {
-			throw new ApiException("REFRESH 조건의 Header Token이 아닙니다.");
+			throw new ApiException("REFRESH 조건의 Header 값이 아닙니다.");
 		}
 	}
 }

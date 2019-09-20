@@ -6,9 +6,6 @@ import java.util.stream.Stream;
 
 /**
  * DeviceInfo.java version 2019, 09. 17
- * <p>
- * Copyright 2019 Tmon Corp. All rights Reserved.
- * Tmon PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 @Getter
 public enum DeviceInfo {

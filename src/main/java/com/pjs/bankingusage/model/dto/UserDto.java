@@ -17,12 +17,4 @@ public class UserDto {
 	private String userId;
 	private String password;
 	private String token;
-
-	public User toEntity() {
-		return User.builder()
-				.userId(userId)
-				.password(password)
-				.token(token)
-				.build();
-	}
 }
