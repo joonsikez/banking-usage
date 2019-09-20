@@ -42,4 +42,9 @@ public class DeviceUsageController {
 	public DeviceResponseDto getExpectedRate(@PathVariable final String deviceId) {
 		return deviceUsageService.getExpectedRate(deviceId);
 	}
+
+	@GetMapping("/cache/evict")
+	public void cacheEvict() {
+		deviceUsageService.cacheEvict();
+	}
 }

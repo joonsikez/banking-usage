@@ -9,6 +9,7 @@ import com.pjs.bankingusage.repository.DeviceRepository;
 import com.pjs.bankingusage.repository.DeviceUsageRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,5 +151,9 @@ public class DeviceUsageService {
 	@Transactional
 	public void saveDeviceUsage(DeviceUsage deviceUsage) {
 		deviceUsageRepository.save(deviceUsage);
+	}
+
+	@CacheEvict(value = "system", allEntries = true)
+	public void cacheEvict() {
 	}
 }
