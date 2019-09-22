@@ -32,7 +32,6 @@ public class DeviceUsageCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-
 		ClassPathResource resource = new ClassPathResource(BANKING_USAGE_CSV_FILE);
 
 		try (InputStream is = resource.getInputStream();

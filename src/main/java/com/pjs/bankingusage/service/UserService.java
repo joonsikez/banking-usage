@@ -48,10 +48,10 @@ public class UserService {
 	}
 
 	@Transactional(readOnly = true)
-	public String signIn(final String userId, final String password) {
+	public String signIn(final UserDto userDto) {
 		String token = "";
 		try {
-			User user = userRepository.findOneByUserIdAndPassword(userId, encryptPassword(password));
+			User user = userRepository.findOneByUserIdAndPassword(userDto.getUserId(), encryptPassword(userDto.getPassword()));
 			if (user == null) {
 				log.warn("login fail");
 				throw new UnauthorizationException("계정 정보가 없습니다.");

@@ -34,9 +34,7 @@ public class UserControllerTest {
 	private UserService userService;
 	@Autowired
 	private WebApplicationContext wac;
-
 	private MockMvc mockMvc;
-
 
 	@Before
 	public void setup() {
@@ -65,9 +63,9 @@ public class UserControllerTest {
 		userDto.setPassword("123");
 		userService.signUp(userDto);
 
-		mockMvc.perform(get(END_POINT + "/signin")
-				.param("userId", "login")
-				.param("password", "123")
+		mockMvc.perform(post(END_POINT + "/signin")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectToJsonString(userDto))
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(handler().handlerType(UserController.class))
@@ -82,7 +80,7 @@ public class UserControllerTest {
 		userDto.setPassword("123");
 		userService.signUp(userDto);
 
-		String token = userService.signIn("refresh", "123");
+		String token = userService.signIn(userDto);
 
 		mockMvc.perform(put(END_POINT + "/refresh")
 				.header("Authorization", "Bearer Token " + token)

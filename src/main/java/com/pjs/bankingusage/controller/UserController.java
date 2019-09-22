@@ -32,9 +32,9 @@ public class UserController {
 		return userService.signUp(userDto);
 	}
 
-	@GetMapping("/signin")
-	public String signIn(@RequestParam("userId") String userId, @RequestParam("password") String password) {
-		return userService.signIn(userId, password);
+	@PostMapping("/signin")
+	public String signIn(@RequestBody UserDto userDto) {
+		return userService.signIn(userDto);
 	}
 
 	@PutMapping("/refresh")
