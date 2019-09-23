@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserControllerTest {
-	private static final String END_POINT = "/api/user";
+	private static final String END_POINT = "/api/banking/user";
 
 	@Autowired
 	private UserService userService;
