@@ -1,10 +1,12 @@
 package com.pjs.bankingusage.controller;
 
 import com.pjs.bankingusage.model.dto.DeviceResponseDto;
+import com.pjs.bankingusage.service.DataSaveService;
 import com.pjs.bankingusage.service.DeviceUsageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DeviceUsageController {
 
 	private DeviceUsageService deviceUsageService;
+	private DataSaveService dataSaveService;
 
 	@GetMapping("/devices")
 	public DeviceResponseDto getAllDevices() {
@@ -43,8 +46,13 @@ public class DeviceUsageController {
 		return deviceUsageService.getExpectedRate(deviceId);
 	}
 
-	@GetMapping("/cache/evict")
+	@PutMapping("/cache/evict")
 	public void cacheEvict() {
 		deviceUsageService.cacheEvict();
+	}
+
+	@PutMapping("/data/reload")
+	public void dataReload() {
+		dataSaveService.saveDeviceUsage();
 	}
 }

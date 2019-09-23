@@ -55,7 +55,7 @@ Description : PathVariable로 입력받은 디바이스 정보 중 이용률이 
 #### 5. 사용자 정보 등록
 ```
 Http Method : POST
-URI Path : /api/user/signup
+URI Path : /api/banking/user/signup
 payload : userId, password
 Description : 사용자ID와 PASSWORD를 입력으로 받아 DB에 저장하고 JWT Token 정보를 리턴한다
 ```
@@ -63,17 +63,31 @@ Description : 사용자ID와 PASSWORD를 입력으로 받아 DB에 저장하고 
 #### 6. 사용자 정보 조회
 ```
 Http Method : POST
-URI Path : /api/user/signin
-Parameter : userId, password
+URI Path : /api/banking/user/signin
+payload : userId, password
 Description : 사용자ID와 PASSWORD를 입력으로 받아 DB에서 조회하여 JWT Token 정보를 리턴한다
 ```
 
 #### 7. 사용자 토큰 정보 갱신
 ```
 Http Method : PUT
-URI Path : /api/user/refresh
+URI Path : /api/banking/user/refresh
 Header : Authorization
 Description : HttpRequest Header의 Authorization에 "Bearer Token" + 토큰 입력 할 경우 토큰 재발행 
+```
+
+#### 8. 디바이스 데이터 캐시 삭제
+```
+Http Method : PUT
+URI Path : /api/banking/cache/evict
+Description : device 정보 및 이용률 조회 데이터 캐시 삭제 
+```
+
+#### 9. 초기 데이터 리로드
+```
+Http Method : PUT
+URI Path : /api/banking/data/reload
+Description : device 정보 및 이용률 초기 data reload 
 ```
 
 ### 초기 데이터 구성

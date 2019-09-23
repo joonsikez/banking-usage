@@ -16,4 +16,5 @@ public interface DeviceUsageRepository extends JpaRepository<DeviceUsage, Long> 
 	List<DeviceUsage> findAllByDevice(Device device);
 	@Query(nativeQuery = true, value = "select * from device_usage d WHERE d.device_id = :deviceId order by d.rate desc limit 1")
 	DeviceUsage findOneByDeviceId(@Param("deviceId") String deviceId);
+	DeviceUsage findAllByYearAndDevice(int year, Device device);
 }

@@ -72,7 +72,7 @@ public class DeviceUsageService {
 		return deviceResponseDto;
 	}
 
-	@Cacheable(value = "system", key = "{#root.methodName}")
+	@Cacheable(value = "system", key = "{#root.methodName, #year}")
 	@Transactional(readOnly = true)
 	public DeviceResponseDto getMaxDeviceByYear(final int year) {
 		DeviceResponseDto deviceResponseDto = new DeviceResponseDto();
@@ -141,16 +141,6 @@ public class DeviceUsageService {
 	@Transactional(readOnly = true)
 	public Device getDeviceByDeviceId(String deviceId) {
 		return deviceRepository.findOneByDeviceId(deviceId);
-	}
-
-	@Transactional
-	public void saveDevice(Device device) {
-		deviceRepository.save(device);
-	}
-
-	@Transactional
-	public void saveDeviceUsage(DeviceUsage deviceUsage) {
-		deviceUsageRepository.save(deviceUsage);
 	}
 
 	@CacheEvict(value = "system", allEntries = true)

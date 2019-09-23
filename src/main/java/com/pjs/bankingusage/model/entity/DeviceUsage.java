@@ -28,9 +28,10 @@ public class DeviceUsage {
 	private Device device;
 
 	@Builder
-	public DeviceUsage(int year, double rate, Device device) {
+	public DeviceUsage(int year, double rate, Device device, Long id) {
 		this.year = year;
 		this.rate = rate;
 		this.device = device;
+		this.id = id;
 	}
 }
